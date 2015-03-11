@@ -52,7 +52,7 @@ Runin_Local_Window **local_runin_win;
 
 
 /* create window */
-GtkWidget *create_window(Test_Items_List *list)
+GtkWidget *create_window(Ck_Boxes *cbs, Test_Items_List *list)
 {
 	PangoFontDescription *fontdesc = NULL;
 
@@ -124,12 +124,6 @@ GtkWidget *create_window(Test_Items_List *list)
 	gtk_table_set_row_spacings(GTK_TABLE(layout_table), 1);
 	gtk_table_set_col_spacings(GTK_TABLE(layout_table), 1);
 	gtk_box_pack_start(GTK_BOX(big_box), layout_table, TRUE, TRUE, 5);
-
-	/* The check boxes */
-	Ck_Boxes *cbs;
-	cbsize = sizeof(int) + sizeof(GtkWidget *) * list->length;
-	cbs = (Ck_Boxes *) malloc (cbsize);
-	memset(cbs, 0, cbsize);
 
 //	cbwgtsize = sizeof(GtkWidget *) * list->length;
 //	cbs->widget = (GtkWidget **) malloc (cbwgtsize);
@@ -258,10 +252,16 @@ int main(int argc, char **argv)
 	/* get flow list(the list in origin_flow.txt), and store into orig_list */
 	getFlowFromConfig(L, "con", "FLOW", orig_list);
 	DeBug(printf("orig_list->length %d\n", orig_list->length))
-	window_init(orig_list);
+	
+	/* The check boxes */
+	Ck_Boxes *cbs;
+	cbsize = sizeof(int) + sizeof(GtkWidget *) * orig_list->length;
+	cbs = (Ck_Boxes *) malloc (cbsize);
+	memset(cbs, 0, cbsize);
+	
+	window_init(cbs, orig_list);
 	FreeTIL(orig_list);
 	orig_list = NULL;
-
 	
 	/* if frt then automatic start */
 	stage = (char *)getTableElement(L, "con", "station");
@@ -294,9 +294,10 @@ int main(int argc, char **argv)
 			runin_ids = NULL;
 		}
 	}
-	
-	free(cbs);
-	cbs = NULL;
+	if (cbs != NULL) {
+		free(cbs);
+		cbs = NULL;
+	}
 
 	/* free fnl list */
 	if (fnl_list != NULL) {
