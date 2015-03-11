@@ -294,6 +294,7 @@ int main(int argc, char **argv)
 			runin_ids = NULL;
 		}
 	}
+	
 	if (cbs != NULL) {
 		free(cbs);
 		cbs = NULL;
