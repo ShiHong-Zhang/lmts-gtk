@@ -131,9 +131,9 @@ GtkWidget *create_window(Test_Items_List *list)
 	cbs = (Ck_Boxes *) malloc (cbsize);
 	memset(cbs, 0, cbsize);
 
-	cbwgtsize = sizeof(GtkWidget *) * list->length;
-	cbs->widget = (GtkWidget **) malloc (cbwgtsize);
-	memset(cbs->widget, 0, cbwgtsize);
+//	cbwgtsize = sizeof(GtkWidget *) * list->length;
+//	cbs->widget = (GtkWidget **) malloc (cbwgtsize);
+//	memset(cbs->widget, 0, cbwgtsize);
 
 	for(i = 0; i < list->length; ++i){
 		/* when one column have 10 items "j", change another column "k". */
@@ -294,6 +294,9 @@ int main(int argc, char **argv)
 			runin_ids = NULL;
 		}
 	}
+	
+	free(cbs);
+	cbs = NULL;
 
 	/* free fnl list */
 	if (fnl_list != NULL) {
