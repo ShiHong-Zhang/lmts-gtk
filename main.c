@@ -125,10 +125,6 @@ GtkWidget *create_window(Ck_Boxes *cbs, Test_Items_List *list)
 	gtk_table_set_col_spacings(GTK_TABLE(layout_table), 1);
 	gtk_box_pack_start(GTK_BOX(big_box), layout_table, TRUE, TRUE, 5);
 
-//	cbwgtsize = sizeof(GtkWidget *) * list->length;
-//	cbs->widget = (GtkWidget **) malloc (cbwgtsize);
-//	memset(cbs->widget, 0, cbwgtsize);
-
 	for(i = 0; i < list->length; ++i){
 		/* when one column have 10 items "j", change another column "k". */
 		/* j for row, k for column */
